@@ -105,7 +105,9 @@ def handle_update1(lst):
 def delete(lista_cheltuieli, numar_apartament, tip):
     result = []
     for i in lista_cheltuieli:
-        if get_numar_apartament(i) != numar_apartament and get_tip(i) != tip:
+        if get_numar_apartament(i) == numar_apartament and get_tip(i) == tip:
+            pass
+        else:
             result.append(i)
     return result
 
