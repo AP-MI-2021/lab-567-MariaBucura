@@ -1,7 +1,83 @@
 import datetime
 from Domain.Cheltuiala import getNewPayment, get_data, get_numar_apartament, get_payment_string
-from Logic.crud import create, read, update, delete, handle_add, handle_read,handle_update, handle_delete, handle_delete1, handle_update1, handle_read1, handle_add1
-from Logic.operations import delete_all_payments, add_value_same_date, search_date, maxim_cheltuieli, find_apt_with_max, ordonare_descrescator, handle_ap_sum, handle_deleteall, handle_addvalue, handle_maxpayments, handle_decreasingsort, handle_addvalue1, handle_deleteall1, handle_undo, handle_redo
+from Logic.crud import create, read, update, delete
+from Logic.operations import delete_all_payments, add_value_same_date, search_date, maxim_cheltuieli, find_apt_with_max, ordonare_descrescator, handle_ap_sum, handle_maxpayments, handle_undo, handle_redo
+
+
+def handle_read1(lst):
+    search = int(input('numar apartament: '))
+    e = read(lst, search)
+    if e is None:
+        print('Nu exista astfel de inregistrari.')
+    else:
+        print(f'Inregistrarile pentru apartamentul {search}: ')
+        print(e)
+
+
+def handle_add1(lst):
+    nr = int(input('numar apartament: '))
+    sum = int(input('suma: '))
+    year = int(input('anul: '))
+    month = int(input('luna: '))
+    day = int(input('ziua: '))
+    tip = input('tipul: ')
+    date = datetime.datetime(year, month, day)
+    create(lst, nr, sum, date, tip)
+    print('Inregistrarea a fost adaugata.')
+    return lst
+
+
+def handle_update1(lst):
+    print('Introduceti numarul si tipul: ')
+    nr = int(input('nr apartament: '))
+    tip = input('tipul: ')
+    print('Introduceti noile date: ')
+    sum = int(input('suma: '))
+    yyyy = int(input('anul: '))
+    mm = int(input('luna: '))
+    dd = int(input('ziua: '))
+    data = datetime.datetime(yyyy, mm, dd)
+    new = getNewPayment(nr, sum, data, tip)
+    lst = update(lst, new)
+    print(f'Inregistrarea ({nr}, {tip}) a fost modificata')
+    return lst
+
+
+def handle_delete1(lst):
+    nr = int(input('numar apartament: '))
+    tip = input('tipul: ')
+    lst = delete(lst, nr, tip)
+    print('Inregistrarea a fost stearsa.')
+    return lst
+
+
+def handle_deleteall1(lst):
+    nr = int(input('Apartamentul: '))
+    e = read(lst, nr)
+    if e is None:
+        print('Nu exista inregistrarea. ')
+    else:
+        lst = delete_all_payments(lst, nr)
+        print('Inregistrarile au fost sterse. ')
+    return lst
+
+
+def handle_addvalue1(lst):
+    yyyy = int(input('anul: ')); mm = int(input('luna: ')); dd = int(input('ziua: ')); v = int(input('valoarea: '))
+    data = datetime.datetime(yyyy, mm, dd)
+    ok = search_date(lst, data)
+    if ok == 0:
+        print('Nu exista inregistrari cu data introdusa.')
+    else:
+        lst = add_value_same_date(lst, data, v)
+        print('Inregistrarile au fost modificate.')
+    return lst
+
+
+def handle_decreasingsort(lst):
+    lst = ordonare_descrescator(lst)
+    print('lista a fost ordonata.')
+    return lst
 
 
 def show_menu():
