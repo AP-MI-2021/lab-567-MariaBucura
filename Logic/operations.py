@@ -16,25 +16,6 @@ def delete_all_payments(lista_cheltuieli, numar_apartament):
             result.append(i)
     return result
 
-def handle_deleteall(lst, numar_apartament):
-    nr = int(numar_apartament)
-    e = read(lst, nr)
-    if e is None:
-        print('Nu exista inregistrarea. ')
-    else:
-        lst = delete_all_payments(lst, nr)
-        print('Inregistrarile au fost sterse. ')
-    return lst
-
-def handle_deleteall1(lst):
-    nr = int(input('Apartamentul: '))
-    e = read(lst, nr)
-    if e is None:
-        print('Nu exista inregistrarea. ')
-    else:
-        lst = delete_all_payments(lst, nr)
-        print('Inregistrarile au fost sterse. ')
-    return lst
 
 def search_date(lista_cheltuieli, data):
     '''
@@ -69,27 +50,6 @@ def add_value_same_date(lista_cheltuieli, data, add):
             result.append(i)
     return result
 
-def handle_addvalue(lst, anul, luna, ziua, valoarea):
-    yyyy = int(anul); mm = int(luna); dd = int(ziua); v = int(valoarea)
-    data = datetime.datetime(yyyy, mm, dd)
-    ok = search_date(lst, data)
-    if ok == 0:
-        print('Nu exista inregistrari cu data introdusa.')
-    else:
-        lst = add_value_same_date(lst, data, v)
-        print('Inregistrarile au fost modificate.')
-    return lst
-
-def handle_addvalue1(lst):
-    yyyy = int(input('anul: ')); mm = int(input('luna: ')); dd = int(input('ziua: ')); v = int(input('valoarea: '))
-    data = datetime.datetime(yyyy, mm, dd)
-    ok = search_date(lst, data)
-    if ok == 0:
-        print('Nu exista inregistrari cu data introdusa.')
-    else:
-        lst = add_value_same_date(lst, data, v)
-        print('Inregistrarile au fost modificate.')
-    return lst
 
 def maxim_cheltuieli(lista_cheltuieli, tip):
     '''
@@ -120,6 +80,7 @@ def handle_maxpayments(lst):
         f'valoarea maxima pentru: alte cheltuieli - {maxim_cheltuieli(lst, "alte cheltuieli")} lei efectuata de apartamentul/apartamentele:')
     find_apt_with_max(lst, 'alte cheltuieli')
 
+
 def ordonare_descrescator(lista_cheltuieli):
     '''
     ordonare descrescator a elementelor din lista dupa suma
@@ -135,10 +96,6 @@ def ordonare_descrescator(lista_cheltuieli):
                 lista_cheltuieli[j] = aux
     return lista_cheltuieli
 
-def handle_decreasingsort(lst):
-    lst = ordonare_descrescator(lst)
-    print('lista a fost ordonata.')
-    return lst
 
 def handle_sum(nr_ap, lst):
     month = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -147,6 +104,7 @@ def handle_sum(nr_ap, lst):
             m = get_data(i)
             month[m.month] = month[m.month] + get_suma(i)
     return month
+
 
 def get_ap_list(lst):
     aux = []; aux = lst
@@ -193,6 +151,7 @@ def handle_redo(list_versions, current_version):
     return list_versions[current_version], current_version
 '''
 
+
 def handle_undo(lst, undo, redo):
     if len(undo) == 1:
         redo.append(undo[0][:])
@@ -207,6 +166,7 @@ def handle_undo(lst, undo, redo):
         n = len(undo)
         lst = undo[n - 1][:]
     return lst, undo, redo
+
 
 def handle_redo(lst, undo, redo):
     if redo == []:
